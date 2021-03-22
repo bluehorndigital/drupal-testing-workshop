@@ -23,6 +23,8 @@ services:
   # to appserver. But having `socket hang up` errors.
   node:
     type: node:12
+    build:
+      - yarn install
     overrides:
       environment:
         # Nightwatch
@@ -37,7 +39,7 @@ services:
   chromedriver:
     type: compose
     services:
-      image: drupalci/webdriver-chromedriver:production
+      image: drupalci/chromedriver:production
       # Lando always overrides the default entrypoint.
       command: chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips=
 tooling:
