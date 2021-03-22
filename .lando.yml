@@ -24,7 +24,7 @@ services:
   node:
     type: node:12
     build:
-      - yarn install
+      - yarn install --non-interactive --cwd /app/web/core
     overrides:
       environment:
         # Nightwatch

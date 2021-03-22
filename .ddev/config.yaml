@@ -16,7 +16,7 @@ composer_version: "2"
 hooks:
   post-start:
     - exec: cd .. && composer install
-    - exec: cd core && yarn install
+    - exec: yarn install --non-interactive --cwd /var/www/html/web/core
     - exec: mkdir -p private/browsertest_output
 
 # This config.yaml was created with ddev version v1.16.7
