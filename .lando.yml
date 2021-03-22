@@ -5,6 +5,9 @@ config:
   composer_version: 2
 services:
   appserver:
+    build:
+      - composer install
+      - mkdir -p private/browsertest_output
     overrides:
       environment:
         # PHPUnit
