@@ -14,3 +14,4 @@ jobs:
       - run: sudo dpkg -i --ignore-depends=docker-ce lando-stable.deb
       - run: lando start
       - run: lando phpunit core/modules/action --debug
+      - run: lando nightwatch --tag quicklink
