@@ -1,0 +1,53 @@
+name: nightwatch-training
+recipe: drupal9
+config:
+  webroot: web
+  composer_version: 2
+services:
+  appserver:
+    overrides:
+      environment:
+        # PHPUnit
+        SYMFONY_DEPRECATIONS_HELPER: weak
+        SIMPLETEST_DB: 'mysql://drupal9:drupal9@database:3306/drupal9'
+        SIMPLETEST_BASE_URL: 'http://appserver'
+        BROWSERTEST_OUTPUT_DIRECTORY: /var/www/html/private/browsertest_output
+        # @todo is there a way to dynamically set this in .lando.yml?
+        # like have this read from $LANDO_DOMAIN
+        BROWSERTEST_OUTPUT_BASE_URL: https://nightwatch-training.lndo.site/
+        MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://chromedriver:9515"]'
+  # @todo this will break since there is no PHP, probably need to add Node + Yarn
+  # to appserver. But having `socket hang up` errors.
+  node:
+    type: node:12
+    overrides:
+      environment:
+        # Nightwatch
+        DRUPAL_TEST_BASE_URL: 'http://appserver'
+        DRUPAL_TEST_DB_URL: 'mysql://drupal9:drupal9@database:3306/drupal9'
+        DRUPAL_TEST_WEBDRIVER_HOSTNAME: chromedriver
+        DRUPAL_TEST_WEBDRIVER_PORT: 9515
+        DRUPAL_TEST_CHROMEDRIVER_AUTOSTART: 'false'
+        DRUPAL_TEST_WEBDRIVER_CHROME_ARGS: "--disable-gpu --headless"
+        DRUPAL_NIGHTWATCH_OUTPUT: reports/nightwatch
+        DRUPAL_NIGHTWATCH_IGNORE_DIRECTORIES: node_modules,vendor,.*,sites/*/files,sites/*/private,sites/simpletest
+  chromedriver:
+    type: compose
+    services:
+      image: drupalci/webdriver-chromedriver:production
+      # Lando always overrides the default entrypoint.
+      command: chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips=
+tooling:
+  phpunit:
+    service: appserver
+    description: Run phpunit
+    cmd: php /app/vendor/bin/phpunit -c core/phpunit.xml.dist
+    dir: /app/web
+  nightwatch:
+    service: node
+    description: Run Nightwatch.js
+    cmd: yarn test:nightwatch
+    dir: /app/web/core
+events:
+  post-start:
+    - appserver: mkdir -p private/browsertest_output

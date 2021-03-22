@@ -1,0 +1,16 @@
+name: Lando
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: wget https://files.devwithlando.io/lando-stable.deb
+      - run: sudo dpkg -i --ignore-depends=docker-ce lando-stable.deb
+      - run: lando start
+      - run: lando phpunit core/modules/action --debug
