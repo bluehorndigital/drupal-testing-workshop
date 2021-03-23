@@ -71,12 +71,14 @@ jobs:
       - run: "yarn install --non-interactive --cwd $GITHUB_WORKSPACE/web/core"
       - run: "mkdir -p private/browsertest_output"
       - run: "cd web && php -S 127.0.0.1:8080 .ht.router.php &"
-      # Run Chromedriver installed for Drupal
-      - run: "./web/core/node_modules/.bin/chromedriver &"
+      # Chromedriver already exists
+      - run: "chromedriver &"
 
-      - run: |
+      - name: phpunit
+        run: |
           cd web
           php $GITHUB_WORKSPACE/vendor/bin/phpunit -c core/phpunit.xml.dist core/modules/action --debug
-      - run: |
+      - name: nightwatch
+        run: |
           cd web/core
           yarn test:nightwatch --tag quicklink
