@@ -1,4 +1,4 @@
-name: nightwatch-training
+name: drupal-testing-workshop
 type: drupal9
 docroot: web
 php_version: "7.3"
