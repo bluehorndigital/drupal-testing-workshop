@@ -41,7 +41,7 @@ services:
     services:
       image: drupalci/chromedriver:production
       # Lando always overrides the default entrypoint.
-      command: chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips=
+      command: chromedriver --verbose --whitelisted-ips=
 tooling:
   phpunit:
     service: appserver
