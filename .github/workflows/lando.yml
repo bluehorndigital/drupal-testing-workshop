@@ -15,3 +15,5 @@ jobs:
       - run: lando start
       - run: lando phpunit core/modules/action --debug
       - run: lando nightwatch --tag quicklink
+      - run: lando logs -s chromedriver
+        if: ${{ failure() }}

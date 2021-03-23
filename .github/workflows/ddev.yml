@@ -13,3 +13,5 @@ jobs:
       - uses: jonaseberle/github-action-setup-ddev@v1
       - run: ddev phpunit core/modules/action --debug
       - run: ddev nightwatch --tag quicklink
+      - run: ddev logs -s chromedriver
+        if: ${{ failure() }}
