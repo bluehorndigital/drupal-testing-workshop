@@ -4,10 +4,22 @@
 
 Example of using Drupal's Nightwatch.js test suite
 
+## Notes
+
+### Chromedriver `--no-sandbox` in containers
+
+When running headless Chrome via Chromedriver in a container, you must specify
+the `--no-sandbox` flag. Without this flag, Chrome will not start. This can be
+mitigated if the container has an appropriate user configured (the DrupalCI image
+used here does not&ast;)
+
+Source: https://developers.google.com/web/updates/2017/04/headless-chrome
+
+&ast; The example provided by Google shows an example from [Lighthouse Bot](https://github.com/GoogleChromeLabs/lighthousebot/blob/master/builder/Dockerfile#L35-L40) that sets the user to `chrome`. The `drupalci/chromedriver` performs nearly the same operation but as `chromeuser`. I have opened an issue for the DrupalCI image here: https://www.drupal.org/project/drupalci_environments/issues/3205271
+
 ## TODO
 
 * Write up how to do this locally
-* DDEV Nightwatch won't connect to Chromedriver, due to sockets? PHPUnit OK
 * Lando complains `private/browsertest_output` is not writeable, it should be generated on install but is missing
 
 ## Locally
