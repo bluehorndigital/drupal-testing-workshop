@@ -1,0 +1,78 @@
+name: Local
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  # shivammathur/setup-php
+  PHP_EXTENSIONS: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, gd, exif, iconv
+  PHP_VERSION: 7.4
+
+  # PHPUnit
+  SYMFONY_DEPRECATIONS_HELPER: weak
+  SIMPLETEST_DB: qlite://localhost/sites/default/files/.ht.sqlite
+  SIMPLETEST_BASE_URL: http://127.0.0.1:8080
+  BROWSERTEST_OUTPUT_DIRECTORY: $GITHUB_WORKSPACE/private/browsertest_output
+  MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://chromedriver:9515"]'
+
+  # Nightwatch
+  DRUPAL_TEST_BASE_URL: http://127.0.0.1:8080
+  DRUPAL_TEST_DB_URL: qlite://localhost/sites/default/files/.ht.sqlite
+  DRUPAL_TEST_WEBDRIVER_HOSTNAME: 127.0.0.1
+  DRUPAL_TEST_WEBDRIVER_PORT: 9515
+  DRUPAL_TEST_CHROMEDRIVER_AUTOSTART: 'false'
+  DRUPAL_TEST_WEBDRIVER_CHROME_ARGS: "--disable-gpu --headless --no-sandbox"
+  DRUPAL_NIGHTWATCH_OUTPUT: reports/nightwatch
+  DRUPAL_NIGHTWATCH_IGNORE_DIRECTORIES: node_modules,vendor,.*,sites/*/files,sites/*/private,sites/simpletest
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Validate and Test
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP extensions cache
+        id: extcache
+        uses: shivammathur/cache-extensions@v1
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          key: php-ext-cache-v1
+      - name: Cache PHP extensions
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.extcache.outputs.dir }}
+          key: ${{ steps.extcache.outputs.key }}
+          restore-keys: ${{ steps.extcache.outputs.key }}
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: ${{ env.PHP_EXTENSIONS }}
+          coverage: none
+          tools: composer:v2
+      - name: Set Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v2
+        with:
+          path: ${{steps.composer-cache.outputs.dir}}
+          key: composer-${{hashFiles('**/composer.lock')}}
+          restore-keys: composer-
+
+      - name: Setup problem matchers for PHP
+        run: echo "::add-matcher::${{runner.tool_cache}}/php.json"
+      - name: Setup problem matchers for PHPUnit
+        run: echo "::add-matcher::${{runner.tool_cache}}/phpunit.json"
+
+      - run: "composer install --no-progress --prefer-dist"
+      - run: "yarn install --non-interactive --cwd /var/www/html/web/core"
+      - run: "mkdir -p private/browsertest_output"
+      - run: "cd web && php -S 127.0.0.1:8080 .ht.router.php &"
+      # Run Chromedriver installed for Drupal
+      - run: "./web/core/node_modules/.bin/chromedriver &"
+
+      - run: "cd web && php ../vendor/bin/phpunit -c core/phpunit.xml core/modules/action --debug"
+      - run: "cd web/core && yarn test:nightwatch --tag quicklink"
