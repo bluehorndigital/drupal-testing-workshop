@@ -74,5 +74,9 @@ jobs:
       # Run Chromedriver installed for Drupal
       - run: "./web/core/node_modules/.bin/chromedriver &"
 
-      - run: "cd web && php ../vendor/bin/phpunit -c core/phpunit.xml core/modules/action --debug"
-      - run: "cd web/core && yarn test:nightwatch --tag quicklink"
+      - run: |
+          cd web
+          php $GITHUB_WORKSPACE/vendor/bin/phpunit -c core/phpunit.xml.dist core/modules/action --debug
+      - run: |
+          cd web/core
+          yarn test:nightwatch --tag quicklink
