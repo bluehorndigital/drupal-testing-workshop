@@ -1,6 +1,6 @@
 # Drupal & Nightwatch.js training
 
-[![Lando](https://github.com/bluehorndigital/drupal-testing-workshop/actions/workflows/lando.yml/badge.svg)](https://github.com/bluehorndigital/drupal-testing-workshop/actions/workflows/lando.yml) [![DDEV](https://github.com/bluehorndigital/drupal-testing-workshop/actions/workflows/ddev.yml/badge.svg)](https://github.com/bluehorndigital/drupal-testing-workshop/actions/workflows/ddev.yml)
+[![Lando](https://github.com/bluehorndigital/drupal-testing-workshop/actions/workflows/lando.yml/badge.svg)](https://github.com/bluehorndigital/drupal-testing-workshop/actions/workflows/lando.yml) [![DDEV](https://github.com/bluehorndigital/drupal-testing-workshop/actions/workflows/ddev.yml/badge.svg)](https://github.com/bluehorndigital/drupal-testing-workshop/actions/workflows/ddev.yml) [![Local](https://github.com/bluehorndigital/drupal-testing-workshop/actions/workflows/local.yml/badge.svg)](https://github.com/bluehorndigital/drupal-testing-workshop/actions/workflows/local.yml)
 
 Example of using Drupal's Nightwatch.js test suite
 
