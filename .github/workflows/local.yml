@@ -15,7 +15,7 @@ env:
   SIMPLETEST_DB: sqlite://localhost/sites/default/files/.ht.sqlite
   SIMPLETEST_BASE_URL: http://127.0.0.1:8080
   BROWSERTEST_OUTPUT_DIRECTORY: $GITHUB_WORKSPACE/private/browsertest_output
-  MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://chromedriver:9515"]'
+  MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:9515"]'
 
   # Nightwatch
   DRUPAL_TEST_BASE_URL: http://127.0.0.1:8080
