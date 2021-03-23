@@ -68,7 +68,7 @@ jobs:
         run: echo "::add-matcher::${{runner.tool_cache}}/phpunit.json"
 
       - run: "composer install --no-progress --prefer-dist"
-      - run: "yarn install --non-interactive --cwd /var/www/html/web/core"
+      - run: "yarn install --non-interactive --cwd $GITHUB_WORKSPACE/web/core"
       - run: "mkdir -p private/browsertest_output"
       - run: "cd web && php -S 127.0.0.1:8080 .ht.router.php &"
       # Run Chromedriver installed for Drupal
