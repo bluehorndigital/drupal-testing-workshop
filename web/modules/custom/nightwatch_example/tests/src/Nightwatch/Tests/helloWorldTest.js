@@ -28,7 +28,7 @@ module.exports = {
       return drupalSettings.nightwatchTest;
     }, [], function (result) {
       // Assert the returned value!
-      browser.assert.notStrictEqual(result.value, {
+      browser.assert.deepStrictEqual(result.value, {
         echo: 'Hello World!',
       });
     })
