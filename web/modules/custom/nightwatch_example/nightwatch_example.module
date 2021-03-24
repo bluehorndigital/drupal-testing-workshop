@@ -1,0 +1,10 @@
+<?php declare(strict_types=1);
+
+/**
+ * Implements hook_page_attachments().
+ */
+function nightwatch_example_page_attachments(array &$attachments) {
+  $attachments['#attached']['drupalSettings']['nightwatchTest'] = [
+    'echo' => 'Hello World!',
+  ];
+}

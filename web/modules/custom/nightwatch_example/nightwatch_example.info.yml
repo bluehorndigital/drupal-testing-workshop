@@ -1,0 +1,4 @@
+name: Nightwatch Example
+description: Example for writing Nightwatch tests
+type: module
+core_version_requirement: ^9
