@@ -5,16 +5,20 @@ nav_order: 1
 has_children: true
 ---
 
+# What tests does Drupal have?
+
 Drupal has a few different testing tools, with their own various test suites.
 
-#### PHPUnit
+## PHPUnit
 
-TODO, with subpage
+There are variable test suites available:
 
-#### Nightwatch
+* Unit tests
+* Kernel tests
+* Functional tests
+* FunctionalJavascript tests
+* Build tests
 
-TODO, with subpage
+## Nightwatch
 
-#### Build tests
-
-TODO, with subpage
+Nightwatch is a JavaScript end to end testing suite.
