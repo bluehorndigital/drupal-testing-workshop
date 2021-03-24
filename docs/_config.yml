@@ -1,3 +1,4 @@
+name: Drupal Testing Workshop
 remote_theme: pmarsceill/just-the-docs
-color_scheme: "dark"
+color_scheme: "bluehorn"
 search_enabled: false
