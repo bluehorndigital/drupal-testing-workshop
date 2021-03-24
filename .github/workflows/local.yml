@@ -86,4 +86,4 @@ jobs:
       - name: nightwatch
         run: |
           cd web/core
-          yarn test:nightwatch --tag quicklink
+          yarn test:nightwatch --tag quicklink --tag workshop
