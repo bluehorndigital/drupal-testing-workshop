@@ -15,6 +15,8 @@ that could be replaced if we upgrade Drupal core.
 
 In `.ddev/docker-compose.testing.yaml`
 
+See https://ddev.readthedocs.io/en/stable/users/extend/custom-compose-files/
+
 ```
 ---
 # Adds Chromedriver and Drupal PHPUnit test environment variables for running tests.
