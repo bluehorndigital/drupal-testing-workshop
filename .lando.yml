@@ -21,7 +21,7 @@ services:
         SYMFONY_DEPRECATIONS_HELPER: weak
         SIMPLETEST_DB: 'mysql://drupal9:drupal9@database:3306/drupal9'
         SIMPLETEST_BASE_URL: 'http://appserver'
-        BROWSERTEST_OUTPUT_DIRECTORY: /var/www/html/private/browsertest_output
+        BROWSERTEST_OUTPUT_DIRECTORY: /app/private/browsertest_output
         # @todo is there a way to dynamically set this in .lando.yml?
         # like have this read from $LANDO_DOMAIN
         BROWSERTEST_OUTPUT_BASE_URL: https://nightwatch-training.lndo.site/
