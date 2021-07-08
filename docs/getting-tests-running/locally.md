@@ -86,7 +86,7 @@ cp core/phpunit.xml.dist core/phpunit.xml
 Modify phpunit.xml
 
 ```
-SIMPLETEST_BASE_URL=http:/127.0.0.1:8080
+SIMPLETEST_BASE_URL=http://127.0.0.1:8080
 SIMPLETEST_DB=sqlite://localhost/sites/default/files/db.sqlite
 BROWSERTEST_OUTPUT_DIRECTORY=../private/browser_output
 MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu", "--no-sandbox"]}}, "http://127.0.0.1:9515"]'
