@@ -4,4 +4,5 @@
 ## Usage: phpunit [flags] [args]
 ## Example: "ddev phpunit --group big_pipe" or "ddev phpunit core/modules/action"
 
+cd web
 php ../vendor/bin/phpunit -c core/phpunit.xml.dist $@

@@ -51,3 +51,32 @@ services:
       DRUPAL_NIGHTWATCH_OUTPUT: reports/nightwatch
       DRUPAL_NIGHTWATCH_IGNORE_DIRECTORIES: node_modules,vendor,.*,sites/*/files,sites/*/private,sites/simpletest
 ```
+
+## Custom commands
+
+You can also provide custom DDEV commands to make running the tests easier: https://ddev.readthedocs.io/en/stable/users/extend/custom-commands/
+
+PHPUnit: `.ddev/commands/web/phpunit`
+
+```
+#!/bin/bash
+
+## Description: Run PHPUnit
+## Usage: phpunit [flags] [args]
+## Example: "ddev phpunit --group big_pipe" or "ddev phpunit core/modules/action"
+
+cd web
+php ../vendor/bin/phpunit -c core/phpunit.xml.dist $@
+```
+
+Nightwatch: `.ddev/commands/web/nightwatch`
+
+```
+#!/bin/bash
+
+## Description: Run Nightwatch
+## Usage: nightwatch [flags] [args]
+## Example: "ddev nightwatch" or "ddev nightwatch --tag core"
+
+yarn --cwd /var/www/html/web/core test:nightwatch $@
+```
